@@ -18,51 +18,41 @@
 </header>
 
 <main>
-
-  <h1>Productos</h1>
-  <p ></p>
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <h5 th:text="${producto.getNombre()}" class="card-title"></h5>
-        <h6 th:text="${producto.getPrecio()}"class="card-subtitle mb-2 text-muted">Card subtitle</h6>
-        <p th:text="'El producto llega en '+${producto.getEntrega()}+' dias'" ></p>
-        <a th:href="@{/productoTipo/${producto.getTipo()}}" class="card-link">Ver producto</a> <p th:text="'Quedan '+${producto.getEntrega()}+' unidades'" ></p>
-      </div>
-      <div class="img_container">
-        <img th:src="cuerda.jpg">
-      </div>
-    </div>
   <div class="row">
     <div class="col-md-4">
-      <img src="https://via.placeholder.com/350x200" alt="Imagen del producto" class="img-fluid">
+      <img src="https://previews.123rf.com/images/fedeni0111/fedeni01111710/fedeni0111171000108/87553128-ilustraci%C3%B3n-de-vector-de-icono-plana-guitarra-cuadrada-cl%C3%A1sica.jp" alt="Imagen del producto" class="img-fluid">
     </div>
     <div class="col-md-8">
       <h1 class="nombre" th:text="${producto.getNombre()}"></h1>
-      <p class="descripcion">Guitarra eléctrica de alta calidad, ideal para músicos experimentados. Incluye estuche rígido para su transporte.</p>
+      <p class="descripcion" th:text="${producto.getDescripcion()}"></p>
       <h2 class="precio" th:text="${producto.getPrecio()}"></h2>
       <h2 class="fechaEntrega" th:text="${producto.getEntrega()}"></h2>
       <button class="btn btn-primary">Agregar al carrito</button>
     </div>
+    <th:block th:if="${correo}">
+      <form class="form-signin" method="post" th:action="@{/crearOpinion}" th:object="${opinion}">
+        <h2 class="form-signin-heading">Comentar:</h2>
+        <p>
+          <label class="sr-only">Comentario</label>
+          <input type="text" th:field="*{texto}" class="form-control" placeholder="Comenta aquí" required autofocus>
+        </p>
+        <label >Valoración</label>
+        <select th:field="*{valoracion}" class="form-control" id="exampleFormControlSelect1">
+          <option th:value="1">1</option>
+          <option th:value="2">2</option>
+          <option th:value="3">3</option>
+          <option th:value="4">4</option>
+          <option th:value="5">5</option>
+        </select>
+        <input name="_csrf" type="hidden" value="i1ZL902ipc9m1bYyIslrDyf4UOCrMj97_03NmZBH9x0WKHwQuG4tkXmaxvtL7NRWF-RfakHNfdidAglWnn7__KVylS51Hh4l" />
+        <input type="hidden" th:field="*{producto}" th:value="${producto}">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
+      </form>
+    </th:block>
 
-    <form th:action="@{/guardarOpinion}" method="post">
-      <fieldset>
-        <legend>Opinar:</legend>
-        <table>
-          <tr>
-            <td><label>Valoracion: </label></td>
-            <td><input name="valoracion" type="text"></td>
-          </tr>
-          <tr>
-            <td><label>Texto: </label></td>
-            <td><input name="texto" type="text"></td>
-          </tr>
-
-          <tr>
-            <td><button type="submit">Enviar</button></td>
-          </tr>
-        </table>
-      </fieldset>
-    </form>
+    <th:block th:unless="${correo}">
+      <h1>Necesitas logearte para dejar un comentario. Logueate <a th:href="@{/login}">aqui</a></h1>
+    </th:block>
 
 
     <th:block th:each="opinion : ${producto.getOpiniones()}">

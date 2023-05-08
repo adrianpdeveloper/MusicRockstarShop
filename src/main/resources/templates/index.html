@@ -7,30 +7,30 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-dark bg-primary">
+    <nav class="navbar navbar-dark bg-orange d-flex flex-row">
         <ul>
-            <a class="navbar-brand" th:href="@{/}"><h1>Music Rockstar</h1></a>
-            <a class="navbar-brand" th:href="@{/productos}">Todos productos</a>
-            <a class="navbar-brand" th:href="@{/pruebas}">prueba</a>
-            <div th:if="${correo}">
-                <a class="navbar-brand" th:href="@{/logout}">Cerrar sesion</a>
-                <p th:text="${correo}"></p>
-            </div>
-            <div th:unless="${correo}">
-                <a class="navbar-brand" th:href="@{/login}">Iniciar sesion</a>
-            </div>
+            <a class="navbar-brand textoBlack" th:href="@{/}"><h1>Music Rockstar</h1></a>
+            <a class="navbar-brand textoBlack" th:href="@{/productos}">Todos productos</a>
+            <a class="navbar-brand textoBlack" th:href="@{/productosOferta}">Productos en oferta</a>
         </ul>
+        <div th:if="${correo}">
+            <a class="navbar-brand textoBlack" th:href="@{/logout}">Cerrar sesion</a>
+            <p th:text="${correo}"></p>
+        </div>
+        <div th:unless="${correo}">
+            <a class="navbar-brand textoBlack" th:href="@{/login}">Iniciar sesion</a>
+        </div>
     </nav>
 
 </header>
 
 <main>
 
-    <div class="content">
+    <div class="content d-flex justify-content-around">
         <div class="card" style="width: 18rem;" th:href="@{/productosCuerda}">
-            <img class="card-img-top"alt="Card image cap">
+            <img class="card-img-top"alt="Card image cap" th:src = "@{https://imgur.com/yZyPVK2}">
             <div class="card-body">
-                <a th:href="@{/productosCuerda}"><h6 class="card-text">Instrumentos de cuerda.</h6></a>
+                <a class="card-title" th:href="@{/productosCuerda}"><h6 class="card-title">Instrumentos de cuerda</h6></a>
             </div>
         </div>
         <div class="card" style="width: 18rem;" th:href="@{/productosCuerda}">
@@ -56,7 +56,13 @@
 </html>
 
 <style>
-    #content{
-        flex-direction: row;
+    a{
+        text-decoration:none;
+    }
+    .bg-orange{
+        background-color: #FFBD59;
+    }
+    .textoBlack{
+        color: black;
     }
 </style>

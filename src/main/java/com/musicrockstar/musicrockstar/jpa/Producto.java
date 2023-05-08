@@ -21,6 +21,8 @@ public class Producto implements Serializable {
 	private int inventario;
 	private int rebaja;
 
+	private String descripcion;
+
 	@OneToMany(mappedBy = "producto")
 	private List<Opinion> opiniones;
 	//bi-directional many-to-one association to Detalle
@@ -28,7 +30,7 @@ public class Producto implements Serializable {
 	public Producto() {
 	}
 
-	public Producto(int id, String nombre, String tipo, String fotos, int entrega, float precio, int inventario, int rebaja) {
+	public Producto(int id, String nombre, String tipo, String fotos, int entrega, float precio, int inventario, int rebaja, String descripcion, List<Opinion> opiniones) {
 		this.id = id;
 		this.nombre = nombre;
 		this.tipo = tipo;
@@ -37,9 +39,11 @@ public class Producto implements Serializable {
 		this.precio = precio;
 		this.inventario = inventario;
 		this.rebaja = rebaja;
+		this.descripcion = descripcion;
+		this.opiniones = opiniones;
 	}
 
-	public Producto(int id, String nombre, String tipo, String fotos, int entrega, float precio, int inventario, int rebaja, List<Opinion> opiniones) {
+	public Producto(int id, String nombre, String tipo, String fotos, int entrega, float precio, int inventario, int rebaja, String descripcion) {
 		this.id = id;
 		this.nombre = nombre;
 		this.tipo = tipo;
@@ -48,7 +52,7 @@ public class Producto implements Serializable {
 		this.precio = precio;
 		this.inventario = inventario;
 		this.rebaja = rebaja;
-		this.opiniones = opiniones;
+		this.descripcion = descripcion;
 	}
 
 	public int getId() {
@@ -113,6 +117,14 @@ public class Producto implements Serializable {
 
 	public void setRebaja(int rebaja) {
 		this.rebaja = rebaja;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
 	}
 
 	public List<Opinion> getOpiniones() {

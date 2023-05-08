@@ -16,6 +16,7 @@ public class Opinion implements Serializable {
 	private String texto;
 	private int valoracion;
 
+	private String email;
 	private String fecha;
 
 
@@ -26,11 +27,31 @@ public class Opinion implements Serializable {
 
 	//bi-directional many-to-one association to Producto
 
-	public Opinion(int id, String texto, int valoracion, Producto producto) {
-		this.id = id;
+
+	public Opinion(String texto, int valoracion, String email, String fecha) {
+		this.texto = texto;
+		this.valoracion = valoracion;
+		this.email = email;
+		this.fecha = fecha;
+	}
+
+	public Opinion(String texto, int valoracion, Producto producto) {
 		this.texto = texto;
 		this.valoracion = valoracion;
 		this.producto = producto;
+	}
+
+	public Opinion(String texto, int valoracion, String email, String fecha, Producto producto) {
+		this.texto = texto;
+		this.valoracion = valoracion;
+		this.email = email;
+		this.fecha = fecha;
+		this.producto = producto;
+	}
+
+	public Opinion(String texto, int valoracion) {
+		this.texto = texto;
+		this.valoracion = valoracion;
 	}
 
 	public int getId() {
