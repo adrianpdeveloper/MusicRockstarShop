@@ -16,6 +16,8 @@
         <div th:if="${correo}">
             <a class="navbar-brand textoBlack" th:href="@{/logout}">Cerrar sesion</a>
             <p th:text="${correo}"></p>
+            <a class="navbar-brand textoBlack" th:href="@{/direccion}">Mis direcciones</a>
+            <a class="navbar-brand textoBlack" th:href="@{/tarjeta}">Mis tarjetas</a>
         </div>
         <div th:unless="${correo}">
             <a class="navbar-brand textoBlack" th:href="@{/login}">Iniciar sesion</a>
@@ -23,29 +25,42 @@
     </nav>
 
 </header>
-
 <main>
-
     <div class="content d-flex justify-content-around">
-        <div class="card" style="width: 18rem;" th:href="@{/productosCuerda}">
-            <img class="card-img-top"alt="Card image cap" th:src = "@{https://imgur.com/yZyPVK2}">
+        <a class="card-title" th:href="@{/productosCuerda}">
+        <div class="card" style="width: 18rem;">
+            <img class="card-img-top"alt="Card image cap" src="https://i.imgur.com/vmjnsrj.jpg">
             <div class="card-body">
-                <a class="card-title" th:href="@{/productosCuerda}"><h6 class="card-title">Instrumentos de cuerda</h6></a>
+                <h4 class="card-title">Cuerda</h4>
             </div>
         </div>
-        <div class="card" style="width: 18rem;" th:href="@{/productosCuerda}">
-            <img class="card-img-top"  alt="Card image cap">
+        </a>
+        <a class="card-title" th:href="@{/productosPercusion}">
+        <div class="card" style="width: 18rem;" th:href="@{/productosPercusión}">
+            <img class="card-img-top"alt="Card image cap" src="https://i.imgur.com/FYARuMJ.jpg">
             <div class="card-body">
-                <h6 class="card-text">Instrumentos de viento.</h6>
+                <h4 class="card-text">Percusión</h4>
             </div>
         </div>
-        <div class="card" style="width: 18rem;" th:href="@{/productosCuerda}">
-            <img class="card-img-top"  alt="Card image cap">
+        </a>
+        <a class="card-title" th:href="@{/productosViento}">
+        <div class="card" style="width: 18rem;" th:href="@{/productosViento}">
+            <img class="card-img-top"alt="Card image cap" src="https://i.imgur.com/OQ6q3vs.jpg">
             <div class="card-body">
-                <h6 class="card-text">Instrumentos de percusion.</h6>
+                <h4 class="card-text">Viento</h4>
             </div>
         </div>
+        </a>
+        <a class="card-title" th:href="@{/productosOtro}">
+            <div class="card" style="width: 18rem;" th:href="@{/productosViento}">
+                <img class="card-img-top"alt="Card image cap" src="https://i.imgur.com/OQ6q3vs.jpg">
+                <div class="card-body">
+                    <h4 class="card-text">Otros</h4>
+                </div>
+            </div>
+        </a>
     </div>
+
 
 </main>
 

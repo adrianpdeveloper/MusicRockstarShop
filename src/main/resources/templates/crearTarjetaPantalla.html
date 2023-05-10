@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form class="form-signin" method="post" th:action="@{/crearTarjeta}" th:object="${tarjeta}">
+    <p>
+        <label class="sr-only">Nombre y apellidos:</label>
+        <input type="text" th:field="*{nombre}" class="form-control" placeholder="Nombre y apellidos" required autofocus>
+    </p>
+    <p>
+        <label class="sr-only">Numero</label>
+        <input type="tel" th:field="*{numero}" class="form-control" placeholder="Numero" required autofocus>
+    </p>
+    <p>
+        <label class="sr-only">CVC:</label>
+        <input type="text" th:field="*{cvc}" class="form-control" placeholder="Calle" required autofocus>
+    </p>
+    <input name="_csrf" type="hidden" value="i1ZL902ipc9m1bYyIslrDyf4UOCrMj97_03NmZBH9x0WKHwQuG4tkXmaxvtL7NRWF-RfakHNfdidAglWnn7__KVylS51Hh4l" />
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
+</form>
+
+</body>
+</html>

@@ -27,7 +27,7 @@
         <h5 th:text="${producto.getNombre()}" class="card-title"></h5>
         <h6 th:text="${producto.getPrecio()}"class="card-subtitle mb-2 text-muted">Card subtitle</h6>
         <p th:text="'El producto llega en '+${producto.getEntrega()}+' dias'" ></p>
-        <a th:href="@{/productoTipo/${producto.getTipo()}}" class="card-link">Ver producto</a> <p th:text="'Quedan '+${producto.getEntrega()}+' unidades'" ></p>
+        <a th:href="@{/producto/{id}(id = ${producto.getId()})}" class="card-link">Ver producto</a> <p th:text="'Quedan '+${producto.getEntrega()}+' unidades'" ></p>
       </div>
       <div class="img_container">
         <img th:src="cuerda.jpg">

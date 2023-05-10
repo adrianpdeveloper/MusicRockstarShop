@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form class="form-signin" method="post" th:action="@{/crearDireccion}" th:object="${direccion}">
+    <p>
+        <label class="sr-only">Nombre y apellidos:</label>
+        <input type="text" th:field="*{nombre}" class="form-control" placeholder="Nombre y apellidos" required autofocus>
+    </p>
+    <p>
+        <label class="sr-only">Telefono:</label>
+        <input type="tel" th:field="*{telefono}" class="form-control" placeholder="Telefono" required autofocus>
+    </p>
+    <p>
+        <label class="sr-only">Calle:</label>
+        <input type="text" th:field="*{calle}" class="form-control" placeholder="Calle" required autofocus>
+    </p>
+    <p>
+        <label class="sr-only">Portal:</label>
+        <input type="number" th:field="*{numero}" class="form-control" placeholder="Portal" required autofocus>
+    </p>
+    <p>
+        <label class="sr-only">Codigo Postal:</label>
+        <input type="text" th:field="*{codigo}" class="form-control" placeholder="Codigo" required autofocus>
+    </p>
+    <p>
+        <label class="sr-only">Ciudad:</label>
+        <input type="text" th:field="*{ciudad}" class="form-control" placeholder="Ciudad" required autofocus>
+    </p>
+    <p>
+        <label class="sr-only">Provincia:</label>
+        <input type="text" th:field="*{provincia}" class="form-control" placeholder="Provincia" required autofocus>
+    </p>
+    <p>
+        <label class="sr-only">Comentario:</label>
+        <input type="text" th:field="*{comentario}" class="form-control" placeholder="nombre">
+    </p>
+    <input name="_csrf" type="hidden" value="i1ZL902ipc9m1bYyIslrDyf4UOCrMj97_03NmZBH9x0WKHwQuG4tkXmaxvtL7NRWF-RfakHNfdidAglWnn7__KVylS51Hh4l" />
+    <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
+</form>
+
+</body>
+</html>
