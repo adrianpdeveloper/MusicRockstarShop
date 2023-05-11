@@ -1,5 +1,6 @@
 package com.musicrockstar.musicrockstar.repositorio;
 
+import com.musicrockstar.musicrockstar.jpa.Carrito;
 import com.musicrockstar.musicrockstar.jpa.Opinion;
 import com.musicrockstar.musicrockstar.jpa.Producto;
 import com.musicrockstar.musicrockstar.jpa.Users;
@@ -16,8 +17,12 @@ public class UsersService {
     @Autowired
     UsersRepositorio users;
 
+    @Autowired
+    CarritoRepositorio carritos;
+
     public void registrarUser(Users user) {
         users.save(user);
+        carritos.save(new Carrito(user.getUsername()));
     }
 
     public Optional<Users> bbuscarUser(String correo) {

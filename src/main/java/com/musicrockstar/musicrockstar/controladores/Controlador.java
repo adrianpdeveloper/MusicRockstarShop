@@ -40,6 +40,8 @@ public class Controlador {
     @Autowired
     TarjetaService tarjetas;
 
+    @Autowired
+    CarritoService carritos;
     @RequestMapping("/")
     public ModelAndView raiz(Authentication auth) {
         ModelAndView mv = new ModelAndView();
@@ -157,16 +159,15 @@ public class Controlador {
     }
 
     @PostMapping("/crearOpinion")
-    public String crearOpinion(@ModelAttribute Opinion opinion, Model model, Authentication auth) {
+    public String crearOpinion(@ModelAttribute Opinion opinion, Model model, Authentication auth, @RequestParam("idProducto") int idProducto) {
         Date myDate = new Date();
+
         String fecha = new SimpleDateFormat("dd-MM-yyyy").format(myDate);
-        Opinion nuevaOpinion = new Opinion(opinion.getTexto(), opinion.getValoracion(), auth.getName(),fecha);
+        Optional<Producto> producto = productos.bbuscarProducto(idProducto);
+        Opinion nuevaOpinion = new Opinion(opinion.getTexto(), opinion.getValoracion(), auth.getName(),fecha,producto.get());
         opiniones.guardarOpinion(nuevaOpinion);
-
-        return "redirect:/producto/"+opinion.getProducto().getId();
+        return "redirect:/producto/"+producto.get().getId();
     }
-
-
 
 
     @PostMapping("/registrarUser")
@@ -193,6 +194,19 @@ public class Controlador {
         }catch (Exception e){
         }
         mv.setViewName("direccion");
+        return mv;
+    }
+
+    @RequestMapping("/carrito")
+    public ModelAndView carrito(Authentication auth) {
+        ModelAndView mv = new ModelAndView();
+        try{
+            Carrito carrito = carritos.carritoEmail(auth.getName());
+            mv.addObject("carrito",carrito);
+            mv.addObject("productos", carrito.getProductos());
+        }catch (Exception e){
+        }
+        mv.setViewName("carrito");
         return mv;
     }
 
@@ -278,7 +292,20 @@ public class Controlador {
 
         return "redirect:/tarjeta";
     }
+    @PostMapping("/agregarCarrito")
+    public String agregarCarrito(@RequestParam("producto") int id_Producto, Model model, Authentication auth) {
 
+        int id = carritos.carritoEmail(auth.getName()).getId();
+        System.out.println("id peticion");
+        System.out.println(id_Producto);
+        Optional<Producto> productoBuscado = productos.bbuscarProducto(id_Producto);
+        Producto producto = productoBuscado.get();
+        System.out.println("id pro");
+        System.out.println(producto.getId());
+        carritos.agregarCarritoEmail(auth.getName(), producto, id);
+
+        return "redirect:/producto/"+id_Producto;
+    }
 
 
 }

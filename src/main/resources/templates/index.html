@@ -18,6 +18,7 @@
             <p th:text="${correo}"></p>
             <a class="navbar-brand textoBlack" th:href="@{/direccion}">Mis direcciones</a>
             <a class="navbar-brand textoBlack" th:href="@{/tarjeta}">Mis tarjetas</a>
+            <a class="navbar-brand textoBlack" th:href="@{/carrito}">Carrito</a>
         </div>
         <div th:unless="${correo}">
             <a class="navbar-brand textoBlack" th:href="@{/login}">Iniciar sesion</a>

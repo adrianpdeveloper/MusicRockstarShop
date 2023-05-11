@@ -23,11 +23,16 @@
       <img src="https://previews.123rf.com/images/fedeni0111/fedeni01111710/fedeni0111171000108/87553128-ilustraci%C3%B3n-de-vector-de-icono-plana-guitarra-cuadrada-cl%C3%A1sica.jp" alt="Imagen del producto" class="img-fluid">
     </div>
     <div class="col-md-8">
+      <h1 class="nombre" th:text="${producto.getId()}"></h1>
       <h1 class="nombre" th:text="${producto.getNombre()}"></h1>
       <p class="descripcion" th:text="${producto.getDescripcion()}"></p>
       <h2 class="precio" th:text="${producto.getPrecio()}"></h2>
       <h2 class="fechaEntrega" th:text="${producto.getEntrega()}"></h2>
-      <button class="btn btn-primary">Agregar al carrito</button>
+      <form class="form-signin" method="post" th:action="@{/agregarCarrito}" th:object="${producto}">
+        <input type="hidden" th:name="producto" th:value="${producto.getId()}">
+        <button class="btn btn-primary"  type="submit">Agregar al carrito</button>
+      </form>
+
     </div>
     <th:block th:if="${correo}">
       <form class="form-signin" method="post" th:action="@{/crearOpinion}" th:object="${opinion}">
@@ -45,7 +50,7 @@
           <option th:value="5">5</option>
         </select>
         <input name="_csrf" type="hidden" value="i1ZL902ipc9m1bYyIslrDyf4UOCrMj97_03NmZBH9x0WKHwQuG4tkXmaxvtL7NRWF-RfakHNfdidAglWnn7__KVylS51Hh4l" />
-        <input type="hidden" th:field="*{producto}" th:value="${producto}">
+        <input type="hidden" th:name="idProducto" th:value="${producto.getId()}">
         <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
       </form>
     </th:block>
@@ -53,14 +58,11 @@
     <th:block th:unless="${correo}">
       <h1>Necesitas logearte para dejar un comentario. Logueate <a th:href="@{/login}">aqui</a></h1>
     </th:block>
-
-
     <th:block th:each="opinion : ${producto.getOpiniones()}">
       <div class="card-body">
         <h5 th:text="${opinion.getTexto()}" class="card-title"></h5>
         <h5 th:text="${opinion.getValoracion()}" class="card-title"></h5>
        </div>
-
     </th:block>
   </div>
 </main>

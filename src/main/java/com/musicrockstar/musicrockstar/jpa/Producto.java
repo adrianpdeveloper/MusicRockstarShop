@@ -25,7 +25,9 @@ public class Producto implements Serializable {
 
 	@OneToMany(mappedBy = "producto")
 	private List<Opinion> opiniones;
-	//bi-directional many-to-one association to Detalle
+
+	@ManyToMany(mappedBy = "productos")
+	private List<Carrito> carrito;
 
 	public Producto() {
 	}
