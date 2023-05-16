@@ -22,7 +22,6 @@ public class CarritoService {
 
     @Autowired
     CarritoRepositorio carritos;
-
     public CarritoService(CarritoRepositorio carritos) {
         this.carritos = carritos;
     }
@@ -38,6 +37,21 @@ public class CarritoService {
         return carrito;
     }
 
+    public void vaciarCarritoEmail(String email){
+        List<Carrito> carritosAll = carritos.findAll();
+        Carrito carrito = new Carrito();
+        for (int i = 0; i<carritosAll.size();i++){
+            if (carritosAll.get(i).getEmail().equalsIgnoreCase(email)){
+                carrito = carritosAll.get(i);
+            }
+        }
+        List<Producto> listaProductos = carrito.getProductos();
+        listaProductos.removeAll(listaProductos);
+        carrito.setProductos(listaProductos);
+        carritos.save(carrito);
+    }
+
+
     public void agregarCarritoEmail(String email, Producto producto, int id_Carrito){
         List<Carrito> carritosAll = carritos.findAll();
         Carrito carrito = new Carrito();
@@ -48,7 +62,6 @@ public class CarritoService {
         }
         List<Producto> productos = new ArrayList<Producto>();
         if (carrito.getProductos()!=null){
-            System.out.println(carrito.getProductos().get(0).getDescripcion());
             productos = carrito.getProductos();
             for (int i = 0; i < carrito.getProductos().size(); i++){
                 if (carrito.getProductos().get(i).getId()==producto.getId());
@@ -62,10 +75,24 @@ public class CarritoService {
             productos.add(producto);
             System.out.println(productos.size());
         }
+
         carrito.setProductos(productos);
         carritos.save(carrito);
         //changeProductList(productos, id_Carrito);
     }
+
+    public void borrarElementoCarrito(Carrito carrito, int id_producto) {
+        List<Producto> al_producto = carrito.getProductos();
+        for (int i = 0; i<al_producto.size(); i++){
+            if (al_producto.get(i).getId() == id_producto){
+                al_producto.remove(i);
+                break;
+            }
+        }
+        carrito.setProductos(al_producto);
+        carritos.save(carrito);
+    }
+
     public void guardarDireccion(Carrito carrito) {
         carritos.save(carrito);
     }

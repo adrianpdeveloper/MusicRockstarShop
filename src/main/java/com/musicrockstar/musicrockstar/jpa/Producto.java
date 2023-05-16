@@ -19,7 +19,7 @@ public class Producto implements Serializable {
 	private int entrega;
 	private float precio;
 	private int inventario;
-	private int rebaja;
+	private float sinRebaja;
 
 	private String descripcion;
 
@@ -29,10 +29,13 @@ public class Producto implements Serializable {
 	@ManyToMany(mappedBy = "productos")
 	private List<Carrito> carrito;
 
+	@ManyToMany(mappedBy = "productos")
+	private List<Pedido> pedidos;
+
 	public Producto() {
 	}
 
-	public Producto(int id, String nombre, String tipo, String fotos, int entrega, float precio, int inventario, int rebaja, String descripcion, List<Opinion> opiniones) {
+	public Producto(int id, String nombre, String tipo, String fotos, int entrega, float precio, int inventario, int sinRebaja, String descripcion, List<Opinion> opiniones) {
 		this.id = id;
 		this.nombre = nombre;
 		this.tipo = tipo;
@@ -40,12 +43,12 @@ public class Producto implements Serializable {
 		this.entrega = entrega;
 		this.precio = precio;
 		this.inventario = inventario;
-		this.rebaja = rebaja;
+		this.sinRebaja = sinRebaja;
 		this.descripcion = descripcion;
 		this.opiniones = opiniones;
 	}
 
-	public Producto(int id, String nombre, String tipo, String fotos, int entrega, float precio, int inventario, int rebaja, String descripcion) {
+	public Producto(int id, String nombre, String tipo, String fotos, int entrega, float precio, int inventario, int sinRebaja, String descripcion) {
 		this.id = id;
 		this.nombre = nombre;
 		this.tipo = tipo;
@@ -53,7 +56,7 @@ public class Producto implements Serializable {
 		this.entrega = entrega;
 		this.precio = precio;
 		this.inventario = inventario;
-		this.rebaja = rebaja;
+		this.sinRebaja = sinRebaja;
 		this.descripcion = descripcion;
 	}
 
@@ -113,12 +116,12 @@ public class Producto implements Serializable {
 		this.inventario = inventario;
 	}
 
-	public int getRebaja() {
-		return rebaja;
+	public float getSinRebaja() {
+		return sinRebaja;
 	}
 
-	public void setRebaja(int rebaja) {
-		this.rebaja = rebaja;
+	public void setSinRebaja(int rebaja) {
+		this.sinRebaja = rebaja;
 	}
 
 	public String getDescripcion() {

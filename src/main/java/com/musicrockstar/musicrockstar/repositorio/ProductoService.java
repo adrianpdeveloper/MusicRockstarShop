@@ -41,6 +41,16 @@ public class ProductoService{
         }
         return cuerdaProductos;
     }
+    public List<Producto> listaProductosOferta() {
+        List<Producto> todosProductos=productos.findAll();
+        List<Producto> ofertaProductos = new ArrayList<>();
+        for (int i = 0; i<todosProductos.size();i++){
+            if (todosProductos.get(i).getSinRebaja() != 0){
+                ofertaProductos.add(todosProductos.get(i));
+            }
+        }
+        return ofertaProductos;
+    }
     public Optional<Producto> bbuscarProducto(int id) {
         return productos.findById(id);
     }

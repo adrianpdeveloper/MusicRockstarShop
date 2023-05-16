@@ -11,21 +11,56 @@
 </head>
 <body>
 <form class="form-signin" method="post" th:action="@{/registrarUser}" th:object="${user}">
-  <h2 class="form-signin-heading">Registrarse Sesión</h2>
+  <img class="card-img-top"alt="Card image cap" src="https://i.imgur.com/DJxPoOi.png">
+  <h2 class="form-signin-heading">Registrarse</h2>
   <p>
     <label class="sr-only">Correo electronico</label>
     <input type="text" th:field="*{username}" class="form-control" placeholder="Correo electrónico" required autofocus>
   </p>
   <p>
     <label class="sr-only">Contraseña</label>
-    <input type="password" th:field="*{password}" class="form-control" placeholder="Contraseña" required>
+    <input type="password" id="password" th:field="*{password}" class="form-control" placeholder="Contraseña" required>
   </p>
   <p>
     <label  class="sr-only">Contraseña</label>
     <input type="password" id="password_repeat" name="password_repeat" class="form-control" placeholder="Repite la Contraseña" required>
   </p>
   <input name="_csrf" type="hidden" value="i1ZL902ipc9m1bYyIslrDyf4UOCrMj97_03NmZBH9x0WKHwQuG4tkXmaxvtL7NRWF-RfakHNfdidAglWnn7__KVylS51Hh4l" />
-  <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+  <button class="btn btn-lg bg-orange btn-block" type="submit">Sign in</button>
 </form>
 </body>
 </html>
+
+
+<style>
+  body{
+    background-color: white;
+  }
+
+  .bg-orange{
+    background-color: #FFBD59;
+  }
+
+</style>
+
+
+<script>
+  var passwordInput = document.getElementById('password');
+  var passwordRepeatInput = document.getElementById('password_repeat');
+
+  passwordInput.addEventListener('input', validatePasswordMatch);
+  passwordRepeatInput.addEventListener('input', validatePasswordMatch);
+
+  function validatePasswordMatch() {
+    var password = passwordInput.value;
+    var passwordRepeat = passwordRepeatInput.value;
+
+    if (password === passwordRepeat) {
+      passwordInput.setCustomValidity('');
+      passwordRepeatInput.setCustomValidity('');
+    } else {
+      passwordInput.setCustomValidity('Las contraseñas no coinciden.');
+      passwordRepeatInput.setCustomValidity('Las contraseñas no coinciden.');
+    }
+  }
+</script>

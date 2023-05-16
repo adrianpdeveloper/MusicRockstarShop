@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<th:block >
+    <form class="form-signin" method="post" th:action="@{/ejecutarPedido}" th:object="${pedido}">
+
+        <h2 class="form-signin-heading">Direccion:</h2>
+        <select class="form-select" th:field="*{direccion}">
+            <div th:each="direccion : ${direcciones}" th:with="direccionValue=${'Calle ' + direccion.getCalle() + ' ' + direccion.getNumero() + ', ' + direccion.getPuerta() + '. ' + direccion.getCodigo()}">
+                <option th:value="${direccionValue}" th:text="${direccionValue}"></option>
+            </div>
+        </select>
+
+        <h2 class="form-signin-heading">Tarjeta:</h2>
+        <select class="form-select" th:field="*{numeroTarjeta}">
+            <div th:each="tarjeta : ${tarjetas}">
+                <option th:value="${tarjeta.getNumero()}" th:text="${tarjeta.getNumero()}"></option>
+            </div>
+        </select>
+
+        <div th:each="producto : ${listaProductos}">
+            <h1 th:text="${producto.getNombre()}"></h1>
+            <h2 th:text="${producto.getPrecio()}"></h2>
+        </div>
+
+        <input type="hidden" th:field="*{productos}" th:value="${productosLista}">
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Enviar</button>
+    </form>
+</th:block>
+</body>
+</html>
