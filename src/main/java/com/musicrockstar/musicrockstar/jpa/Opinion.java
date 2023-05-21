@@ -86,6 +86,22 @@ public class Opinion implements Serializable {
 		this.producto = producto;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getFecha() {
+		return fecha;
+	}
+
+	public void setFecha(String fecha) {
+		this.fecha = fecha;
+	}
+
 	public Opinion() {
 	}
 }

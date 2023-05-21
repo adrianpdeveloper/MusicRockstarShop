@@ -17,16 +17,23 @@
         <a class="navbar-brand textoBlack" th:href="@{/productosOferta}">Productos en oferta</a>
       </div>
     </div>
+    <h1>Mis pedidos</h1>
     <div style="margin-right: 2rem">
       <div th:if="${correo}" style="margin-top: 2rem">
         <div class="d-flex flex-row justify-content-end">
 
           <h2 th:text="'¡Bienvenido '+${correo}+'!'"></h2>
+          <a class="navbar-brand textoBlack" th:href="@{/carrito}">
+            <button type="button" class="btn btn-icon" style="border-color: white; border-width: 3.5px; margin-left: 1rem; margin-top: -10px">
+              <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+              </svg>
+            </button>
+          </a>
         </div>
         <div class="d-flex flex-row justify-content-end">
           <a class="navbar-brand textoBlack" th:href="@{/direccion}">Mis direcciones</a>
           <a class="navbar-brand textoBlack" th:href="@{/tarjeta}">Mis tarjetas</a>
-          <a class="navbar-brand textoBlack" th:href="@{/carrito}">Carrito</a>
           <a class="navbar-brand textoBlack" th:href="@{/pedidoLista}">Mis pedidos</a>
           <a class="navbar-brand textoBlack" th:href="@{/logout}">Cerrar sesión</i></a>
         </div>
@@ -37,20 +44,27 @@
     </div>
   </nav>
 </header>
-<th:block th:if="${pedidos}">
-  <th:block th:each="pedido : ${pedidos}">
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-        <h5 th:text="${pedido.getPrecioTotal()}" class="card-title"></h5>
-        <h6 th:text="${pedido.getNumeroTarjeta()}"class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+<div  class="d-flex flex-row justify-content-center">
+  <div>
+    <th:block th:if="${pedidos}">
+      <th:block th:each="pedido : ${pedidos}">
+        <div class="card" style="width: 30rem; margin-top: 2rem">
+          <div class="card-body">
+            <h4 th:text="'Pedido #'+${pedido.getId()}" class="card-title"></h4>
+            <h5></h5>
+            <h5 th:text="${pedido.getPrecioTotal()}+'€'"></h5>
+            <h6 th:text="'Pagado con tarjeta: '+${pedido.getNumeroTarjeta()}"class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+            <h6 th:text="'Dirección: '+${pedido.getDireccion()}"class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+            <div class="d-flex flex-row justify-content-end">
+              <a th:href="@{/mostrarPedido/{id}(id = ${pedido.getId()})}">Mostrar</a>
+            </div>
 
-        <form th:action="@{/mostrarPedido/{id}(id = ${pedido.getId()})}" method="post">
-          <button type="submit">Mostrar Pedido</button>
-        </form>
-      </div>
-    </div>
-  </th:block>
-</th:block>
+          </div>
+        </div>
+      </th:block>
+    </th:block>
+  </div>
+</div>
 </body>
 </html>
 <style>

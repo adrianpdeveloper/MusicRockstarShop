@@ -88,19 +88,19 @@ public class Controlador {
         try {
 
             List<Producto> todosProductos = productos.listaProductos();
-            //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
             mv.addObject("productos",todosProductos);
             String correo = auth.getName();
             String[] correoSeparado = correo.split("@");
             String user = correoSeparado[0];
             mv.addObject("correo",user);
+            mv.addObject("productoBuscado","Productos");
             mv.setViewName("productos");
             return mv;
 
         }catch(Exception e){
             List<Producto> todosProductos = productos.listaProductos();
-            //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
             mv.addObject("productos",todosProductos);
+            mv.addObject("productoBuscado","Productos");
             mv.setViewName("productos");
             return mv;
         }
@@ -113,12 +113,12 @@ public class Controlador {
         try {
 
             List<Producto> todosProductos = productos.listaProductos();
-            //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
             mv.addObject("productos",todosProductos);
             String correo = auth.getName();
             String[] correoSeparado = correo.split("@");
             String user = correoSeparado[0];
             mv.addObject("correo",user);
+            mv.addObject("productoBuscado","Ofertas");
             mv.setViewName("productos");
             return mv;
 
@@ -126,53 +126,112 @@ public class Controlador {
             List<Producto> todosProductos = productos.listaProductosOferta();
             //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
             mv.addObject("productos",todosProductos);
-            mv.setViewName("productosOferta");
+            mv.addObject("productoBuscado","Ofertas");
+            mv.setViewName("productos");
             return mv;
         }
     }
 
     @RequestMapping("/productosCuerda")
-    public ModelAndView productosCuerda() {
+    public ModelAndView productosCuerda(Authentication auth) {
         ModelAndView mv = new ModelAndView();
+        try {
 
-        List<Producto> todosProductos = productos.listaProductosTipo("cuerda");
-        //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
-        mv.addObject("productos",todosProductos);
-        mv.setViewName("productosCuerda");
-        System.out.println("HOLA");
-        return mv;
+            List<Producto> todosProductos = productos.listaProductosTipo("cuerda");
+            mv.addObject("productos",todosProductos);
+            String correo = auth.getName();
+            String[] correoSeparado = correo.split("@");
+            String user = correoSeparado[0];
+            mv.addObject("correo",user);
+            mv.addObject("productoBuscado","Cuerda");
+            mv.setViewName("productos");
+            return mv;
+
+        }catch(Exception e){
+            List<Producto> todosProductos = productos.listaProductosTipo("cuerda");
+            //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
+            mv.addObject("productos",todosProductos);
+            mv.addObject("productoBuscado","Cuerda");
+            mv.setViewName("productos");
+            return mv;
+        }
     }
 
-    @RequestMapping("/productosViento")
-    public ModelAndView productosViento() {
-        ModelAndView mv = new ModelAndView();
 
-        List<Producto> todosProductos = productos.listaProductosTipo("viento");
-        //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
-        mv.addObject("productos",todosProductos);
-        mv.setViewName("productosViento");
-        return mv;
+    @RequestMapping("/productosViento")
+    public ModelAndView productosViento(Authentication auth) {
+        ModelAndView mv = new ModelAndView();
+        try {
+
+            List<Producto> todosProductos = productos.listaProductosTipo("viento");
+            mv.addObject("productos",todosProductos);
+            String correo = auth.getName();
+            String[] correoSeparado = correo.split("@");
+            String user = correoSeparado[0];
+            mv.addObject("correo",user);
+            mv.addObject("productoBuscado","Viento");
+            mv.setViewName("productos");
+            return mv;
+
+        }catch(Exception e){
+            List<Producto> todosProductos = productos.listaProductosTipo("viento");
+            mv.addObject("productos",todosProductos);
+            mv.addObject("productoBuscado","Viento");
+            mv.setViewName("productos");
+            return mv;
+        }
     }
 
     @RequestMapping("/productosPercusion")
-    public ModelAndView productosPercusion() {
+    public ModelAndView productosPercusion(Authentication auth) {
         ModelAndView mv = new ModelAndView();
-        List<Producto> todosProductos = productos.listaProductosTipo("percusion");
-        //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
-        mv.addObject("productos",todosProductos);
-        mv.setViewName("productosPercusion");
-        System.out.println("HOLA");
-        return mv;
+        try {
+
+            List<Producto> todosProductos = productos.listaProductosTipo("percusion");
+            //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
+            mv.addObject("productos",todosProductos);
+            String correo = auth.getName();
+            String[] correoSeparado = correo.split("@");
+            String user = correoSeparado[0];
+            mv.addObject("correo",user);
+            mv.addObject("productoBuscado","Percusion");
+            mv.setViewName("productos");
+            return mv;
+
+        }catch(Exception e){
+            List<Producto> todosProductos = productos.listaProductosTipo("percusion");
+            //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
+            mv.addObject("productos",todosProductos);
+            mv.addObject("productoBuscado","Percusion");
+            mv.setViewName("productos");
+            return mv;
+        }
     }
 
     @RequestMapping("/productosOtro")
-    public ModelAndView productosOtros() {
+    public ModelAndView productosOtros(Authentication auth) {
         ModelAndView mv = new ModelAndView();
-        List<Producto> todosProductos = productos.listaProductosTipo("otro");
-        //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
-        mv.addObject("productos",todosProductos);
-        mv.setViewName("productosOtro");
-        return mv;
+        try {
+
+            List<Producto> todosProductos = productos.listaProductosTipo("otro");
+            //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
+            mv.addObject("productos",todosProductos);
+            String correo = auth.getName();
+            String[] correoSeparado = correo.split("@");
+            String user = correoSeparado[0];
+            mv.addObject("correo",user);
+            mv.addObject("productoBuscado","Otros");
+            mv.setViewName("productos");
+            return mv;
+
+        }catch(Exception e){
+            List<Producto> todosProductos = productos.listaProductosTipo("otro");
+            //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
+            mv.addObject("productos",todosProductos);
+            mv.addObject("productoBuscado","Otros");
+            mv.setViewName("productos");
+            return mv;
+        }
     }
     @RequestMapping("/prueba")
     public ModelAndView pruebas() {
@@ -331,6 +390,10 @@ public class Controlador {
         Direccion nuevaDireccion = new Direccion(direccion.getNombre(), direccion.getTelefono(), direccion.getCalle(), direccion.getNumero(), direccion.getPuerta(), direccion.getCodigo(),direccion.getCiudad(), direccion.getProvincia(), direccion.getComentario(), auth.getName());
         direcciones.guardarDireccion(nuevaDireccion);
         try{
+            String correo = auth.getName();
+            String[] correoSeparado = correo.split("@");
+            String user = correoSeparado[0];
+            mv.addObject("correo",user);
             List<Direccion> direccionEmail = direcciones.listaDireccionesEmail(auth.getName());
             mv.addObject("direcciones",direccionEmail);
         }catch (Exception e){
@@ -348,6 +411,11 @@ public class Controlador {
         tarjetas.guardarTarjeta(nuevaTarjeta);
 
         try{
+            String correo = auth.getName();
+            String[] correoSeparado = correo.split("@");
+            String user = correoSeparado[0];
+            mv.addObject("correo",user);
+            List<Direccion> direccionEmail = direcciones.listaDireccionesEmail(auth.getName());
             List<Tarjeta> tarjetaEmail = tarjetas.listaTarjetasEmail(auth.getName());
             mv.addObject("tarjetas",tarjetaEmail);
         }catch (Exception e){
@@ -396,6 +464,10 @@ public class Controlador {
         for (int i = 0; i<listaProductos.size(); i++){
             System.out.println(listaProductos.get(i).getNombre());
         }
+        String correo = auth.getName();
+        String[] correoSeparado = correo.split("@");
+        String user = correoSeparado[0];
+        mv.addObject("correo",user);
         mv.addObject("pedido", new Pedido());
         mv.addObject("productosLista", listaProductos);
         mv.addObject("direcciones", listaDirecciones);

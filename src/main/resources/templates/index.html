@@ -12,7 +12,7 @@
         <div class="d-flex flex-column justify-content-start" style="margin-left: 2rem">
             <div><a class="navbar-brand textoBlack" th:href="@{/}"><img class="card-img-top"alt="Card image cap" style="height: 5rem; width: auto" src="https://i.imgur.com/E7ZftA7.png"></a></div>
             <div>
-                <a class="navbar-brand textoBlack" th:href="@{/productos}">Todos productos</a>
+                <a class="navbar-brand textoBlack" th:href="@{/productos}">Todos los productos</a>
                 <a class="navbar-brand textoBlack" th:href="@{/productosOferta}">Productos en oferta</a>
             </div>
         </div>
@@ -21,11 +21,17 @@
                 <div class="d-flex flex-row justify-content-end">
 
                     <h2 th:text="'¡Bienvenido '+${correo}+'!'"></h2>
+                    <a class="navbar-brand textoBlack" th:href="@{/carrito}">
+                        <button type="button" class="btn btn-icon" style="border-color: white; border-width: 3.5px; margin-left: 1rem; margin-top: -10px">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </svg>
+                        </button>
+                    </a>
                 </div>
                 <div class="d-flex flex-row justify-content-end">
                     <a class="navbar-brand textoBlack" th:href="@{/direccion}">Mis direcciones</a>
                     <a class="navbar-brand textoBlack" th:href="@{/tarjeta}">Mis tarjetas</a>
-                    <a class="navbar-brand textoBlack" th:href="@{/carrito}">Carrito</a>
                     <a class="navbar-brand textoBlack" th:href="@{/pedidoLista}">Mis pedidos</a>
                     <a class="navbar-brand textoBlack" th:href="@{/logout}">Cerrar sesión</i></a>
                 </div>
@@ -37,41 +43,35 @@
     </nav>
 
 </header>
-<main>
-    <div class="content d-flex justify-content-around">
+<main style="height: 80%">
+
+    <div class="content d-flex justify-content-around" style="margin-top: 7%">
         <a class="card-title" th:href="@{/productosCuerda}">
-        <div class="card" style="width: 18rem;">
-            <img class="card-img-top"alt="Card image cap" src="https://i.imgur.com/vmjnsrj.jpg">
-            <div class="card-body">
-                <h4 class="card-title">Cuerda</h4>
+            <div class="card" style="width: 22rem; position: relative;">
+                <img class="card-img-top" alt="Card image cap" src="https://i.imgur.com/uzLy3qA.jpg">
+                <h4 class="card-title" style="position: absolute; top: 10%; left: 20%; transform: translate(-50%, -50%); color: #fff; font-size: 1.7rem; font-weight: bold; font-family: 'Arial', sans-serif;">Cuerda</h4>
             </div>
-        </div>
         </a>
         <a class="card-title" th:href="@{/productosPercusion}">
-        <div class="card" style="width: 18rem;" th:href="@{/productosPercusión}">
-            <img class="card-img-top"alt="Card image cap" src="https://i.imgur.com/FYARuMJ.jpg">
-            <div class="card-body">
-                <h4 class="card-text">Percusión</h4>
+            <div class="card" style="width: 22rem; position: relative;">
+                <img class="card-img-top" alt="Card image cap" src="https://i.imgur.com/Ubdd0BU.png">
+                <h4 class="card-title" style="position: absolute; top: 10%; left: 25%; transform: translate(-50%, -50%); color: #fff; font-size: 1.7rem; font-weight: bold; font-family: 'Arial', sans-serif;">Percusión</h4>
             </div>
-        </div>
         </a>
         <a class="card-title" th:href="@{/productosViento}">
-        <div class="card" style="width: 18rem;" th:href="@{/productosViento}">
-            <img class="card-img-top"alt="Card image cap" src="https://i.imgur.com/OQ6q3vs.jpg">
-            <div class="card-body">
-                <h4 class="card-text">Viento</h4>
+            <div class="card" style="width: 22rem; position: relative;">
+                <img class="card-img-top" alt="Card image cap" src="https://i.imgur.com/HNbSRHo.jpg">
+                <h4 class="card-title" style="position: absolute; top: 10%; left: 20%; transform: translate(-50%, -50%); color: #fff; font-size: 1.7rem; font-weight: bold; font-family: 'Arial', sans-serif;">Viento</h4>
             </div>
-        </div>
         </a>
         <a class="card-title" th:href="@{/productosOtro}">
-            <div class="card" style="width: 18rem;" th:href="@{/productosViento}">
-                <img class="card-img-top"alt="Card image cap" src="https://i.imgur.com/OQ6q3vs.jpg">
-                <div class="card-body">
-                    <h4 class="card-text">Otros</h4>
-                </div>
+            <div class="card" style="width: 22rem; position: relative;">
+                <img class="card-img-top" alt="Card image cap" src="https://i.imgur.com/pEOcn7K.png">
+                <h4 class="card-title" style="position: absolute; top: 10%; left: 20%; transform: translate(-50%, -50%); color: #fff; font-size: 1.7rem; font-weight: bold; font-family: 'Arial', sans-serif;">Otros</h4>
             </div>
         </a>
     </div>
+
 
 
 </main>
