@@ -7,16 +7,111 @@
 </head>
 <body>
 <header>
-    <nav class="navbar navbar-dark bg-primary">
-        <ul>
-            <a class="navbar-brand" th:href="@{/}"><h1>Music Rockstar</h1></a>
-            <a class="navbar-brand" th:href="@{/productos}">Todos productos</a>
-            <a class="navbar-brand" th:href="@{/pruebas}">prueba</a>
-        </ul>
+    <nav class="navbar navbar-dark bg-orange d-flex justify-content-between flex-row">
+
+        <div class="d-flex flex-column justify-content-start" style="margin-left: 2rem">
+            <div><a class="navbar-brand textoBlack" th:href="@{/}"><img class="card-img-top"alt="Card image cap" style="height: 5rem; width: auto" src="https://i.imgur.com/E7ZftA7.png"></a></div>
+            <div>
+                <a class="navbar-brand textoBlack" th:href="@{/productos}">Todos los productos</a>
+                <a class="navbar-brand textoBlack" th:href="@{/productosOferta}">Productos en oferta</a>
+            </div>
+        </div>
+        <div style="margin-right: 2rem">
+            <div th:if="${correo}" style="margin-top: 2rem">
+                <div class="d-flex flex-row justify-content-end">
+
+                    <h2 th:text="'¡Bienvenido '+${correo}+'!'"></h2>
+                    <a class="navbar-brand textoBlack" th:href="@{/carrito}">
+                        <button type="button" class="btn btn-icon" style="margin-left: 1rem; margin-top: -10px">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-cart-fill" viewBox="0 0 16 16">
+                                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
+                            </svg>
+                        </button>
+                    </a>
+                </div>
+                <div class="d-flex flex-row justify-content-end">
+                    <a class="navbar-brand textoBlack" th:href="@{/direccion}">Mis direcciones</a>
+                    <a class="navbar-brand textoBlack" th:href="@{/tarjeta}">Mis tarjetas</a>
+                    <a class="navbar-brand textoBlack" th:href="@{/pedidoLista}">Mis pedidos</a>
+                    <a class="navbar-brand textoBlack" th:href="@{/logout}">Cerrar sesión</i></a>
+                </div>
+            </div>
+            <div th:unless="${correo}" class="d-flex flex-row justify-content-end">
+                <a class="navbar-brand textoBlack" th:href="@{/login}">Iniciar sesion</a>
+            </div>
+        </div>
     </nav>
 
 </header>
-<body>
-
+<div style="height: 10rem">
+</div>
+<div class="d-flex flex-direction-row justify-content-center" style="padding-bottom: 5rem;">
+    <h2>¡Pedido finalizado!</h2>
+</div>
+<div class="d-flex flex-direction-row justify-content-center" style="padding-bottom: 5rem;">
+    <div class="card" style="width: 70%">
+        <div class="card-header">
+            Resumen
+        </div>
+        <ul class="list-group list-group-flush">
+            <th:block th:each="producto : ${productos}">
+                <li class="list-group-item">
+                    <div class="d-flex flex-row justify-content-around">
+                        <div style="width: 50%; height: 50%; margin-top: 2rem">
+                            <div>
+                                <a th:href="@{/producto/{id}(id = ${producto.getId()})}" class="textoBlack"><h3 th:text="${producto.getNombre()}" class="card-title"></h3></a>
+                                <h6 th:text="${producto.getDescripcion()}" class="card-title"></h6>
+                                <h2 th:text="${producto.getPrecio()}+' €'"></h2>
+                                <div th:if="${producto.getEntrega()>1}">
+                                    <h6 th:text="'Llega en '+${producto.getEntrega()}+' días'" ></h6>
+                                </div>
+                                <div th:if="${producto.getEntrega()==1}">
+                                    <h6 th:text="'Llega en '+${producto.getEntrega()}+' día'" ></h6>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="img_container" style="margin-top: 1.5rem; margin-bottom: 1.5rem;">
+                                <a th:href="@{/producto/{id}(id = ${producto.getId()})}" class="card-link"><img class="product-image" alt="Card image cap" style="object-fit: cover; height: 250px;" width="auto" th:src="${producto.getFotos()}"></a>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+            </th:block>
+            <li class="list-group-item">
+                <p class="card-text" th:text="'Total: '+${precioTotal}+' €'"></p>
+            </li>
+        </ul>
+    </div>
+</div>
+<div style="height: 8rem"></div>
 </body>
 </html>
+
+<style>
+    a{
+        text-decoration:none;
+    }
+    .bg-orange{
+        background-color: #FFBD59;
+    }
+    .textoBlack{
+        color: black;
+    }
+    header {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 100;
+    }
+    .cardTotal {
+        position: fixed;
+        top: 25%;
+        left: 80%;
+        right: 0;
+        z-index: 100;
+        padding: 1rem 2rem;
+        width: 10rem;
+    }
+</style>

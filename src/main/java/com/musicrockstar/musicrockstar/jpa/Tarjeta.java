@@ -15,21 +15,31 @@ public class Tarjeta {
     private String numero;
     private String cvc;
     private String email;
+    private String fechaValidez;
 
     public Tarjeta() {
     }
 
-    public Tarjeta(String nombre, String numero, String cvc, String email) {
+    public Tarjeta(String nombre, String numero, String cvc, String email, String fechaValidez) {
         this.nombre = nombre;
         this.numero = numero;
         this.cvc = cvc;
         this.email = email;
+        this.fechaValidez = fechaValidez;
     }
 
     public Tarjeta(String nombre, String numero, String cvc) {
         this.nombre = nombre;
         this.numero = numero;
         this.cvc = cvc;
+    }
+
+    public String getFechaValidez() {
+        return fechaValidez;
+    }
+
+    public void setFechaValidez(String fecha) {
+        this.fechaValidez = fecha;
     }
 
     public int getId() {
@@ -59,6 +69,7 @@ public class Tarjeta {
     public String getCvc() {
         return cvc;
     }
+
 
     public void setCvc(String cvc) {
         this.cvc = cvc;

@@ -22,7 +22,7 @@
 
           <h2 th:text="'¡Bienvenido '+${correo}+'!'"></h2>
           <a class="navbar-brand textoBlack" th:href="@{/carrito}">
-            <button type="button" class="btn btn-icon" style="border-color: white; border-width: 3.5px; margin-left: 1rem; margin-top: -10px">
+            <button type="button" class="btn btn-icon" style="margin-left: 1rem; margin-top: -10px">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-cart-fill" viewBox="0 0 16 16">
                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
               </svg>
@@ -101,7 +101,7 @@
           <textarea th:field="*{texto}" class="form-control" placeholder="Comenta aquí" required autofocus></textarea>
         </div>
         </p>
-        <label >Valoración</label>
+        <label>Valoración</label>
         <select th:field="*{valoracion}" class="form-control" id="exampleFormControlSelect1">
           <option th:value="1">1</option>
           <option th:value="2">2</option>
@@ -149,10 +149,6 @@
     </th:block>
   </div>
 </main>
-
-<footer>
-  <p>&copy; 2023 MusicRockstarShop</p>
-</footer>
 </body>
 </html>
 
@@ -161,9 +157,9 @@
     flex-direction: row;
   }
   .product-image {
-    height: 200px; /* Altura fija */
-    width: 100%; /* Anchura variable */
-    object-fit: contain; /* Ajusta la imagen sin distorsionarla */
+    height: 200px;
+    width: 100%;
+    object-fit: contain;
   }
   a{
     text-decoration:none;

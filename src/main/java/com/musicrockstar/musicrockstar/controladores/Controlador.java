@@ -7,14 +7,12 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.jpa.repository.Query;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.view.RedirectView;
+
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -233,6 +231,33 @@ public class Controlador {
             return mv;
         }
     }
+
+    @GetMapping("/busquedaProducto")
+    public ModelAndView procesarFormulario(@RequestParam("buscar") String buscar, Authentication auth) {
+        ModelAndView mv = new ModelAndView();
+        System.out.println("Valor de búsqueda: " + buscar);
+
+        try {
+
+            List<Producto> todosProductos = productos.listaProductosBusqueda(buscar);
+            mv.addObject("productos",todosProductos);
+            String correo = auth.getName();
+            String[] correoSeparado = correo.split("@");
+            String user = correoSeparado[0];
+            mv.addObject("correo",user);
+            mv.addObject("productoBuscado","Resultados de '"+buscar+"'");
+            mv.setViewName("productos");
+            return mv;
+
+        }catch(Exception e){
+            List<Producto> todosProductos = productos.listaProductosBusqueda(buscar);
+            mv.addObject("productos",todosProductos);
+            mv.addObject("productoBuscado","Resultados de '"+buscar+"'");
+            mv.setViewName("productos");
+            return mv;
+        }
+
+    }
     @RequestMapping("/prueba")
     public ModelAndView pruebas() {
         ModelAndView mv = new ModelAndView();
@@ -298,7 +323,10 @@ public class Controlador {
             String[] correoSeparado = correo.split("@");
             String user = correoSeparado[0];
             mv.addObject("correo",user);
-            mv.addObject("direcciones",direccionEmail);
+            if (direccionEmail.size() > 0) {
+                mv.addObject("direcciones",direccionEmail);
+            }
+
         }catch (Exception e){
         }
         mv.setViewName("direccion");
@@ -340,7 +368,10 @@ public class Controlador {
             String user = correoSeparado[0];
             mv.addObject("correo",user);
             List<Tarjeta> tarjetaEmail = tarjetas.listaTarjetasEmail(auth.getName());
-            mv.addObject("tarjetas",tarjetaEmail);
+            if (tarjetaEmail.size()>0){
+                mv.addObject("tarjetas",tarjetaEmail);
+            }
+
         }catch (Exception e){
         }
 
@@ -357,10 +388,11 @@ public class Controlador {
             String user = correoSeparado[0];
             mv.addObject("correo",user);
             List<Pedido> pedidoEmail = pedidos.pedidoEmail(auth.getName());
-            mv.addObject("pedidos",pedidoEmail);
+            if (pedidoEmail.size()>0){
+                mv.addObject("pedidos",pedidoEmail);
+            }
         }catch (Exception e){
         }
-
         mv.setViewName("pedidoLista");
         return mv;
     }
@@ -368,7 +400,10 @@ public class Controlador {
     @RequestMapping("/crearDireccionPantalla")
     public ModelAndView crearDireccionPantalla(Authentication auth) {
         ModelAndView mv = new ModelAndView();
-
+        String correo = auth.getName();
+        String[] correoSeparado = correo.split("@");
+        String user = correoSeparado[0];
+        mv.addObject("correo",user);
         mv.setViewName("crearDireccionPantalla");
         mv.addObject("direccion", new Direccion());
         return mv;
@@ -379,6 +414,10 @@ public class Controlador {
         ModelAndView mv = new ModelAndView();
 
         mv.setViewName("crearTarjetaPantalla");
+        String correo = auth.getName();
+        String[] correoSeparado = correo.split("@");
+        String user = correoSeparado[0];
+        mv.addObject("correo",user);
         mv.addObject("tarjeta", new Tarjeta());
         return mv;
     }
@@ -407,7 +446,7 @@ public class Controlador {
         ModelAndView mv = new ModelAndView();
 
         System.out.println(auth.getName());
-        Tarjeta nuevaTarjeta = new Tarjeta(tarjeta.getNombre(), tarjeta.getNumero(),tarjeta.getCvc(), auth.getName());
+        Tarjeta nuevaTarjeta = new Tarjeta(tarjeta.getNombre(), tarjeta.getNumero(),tarjeta.getCvc(), auth.getName(), tarjeta.getFechaValidez());
         tarjetas.guardarTarjeta(nuevaTarjeta);
 
         try{
@@ -461,9 +500,11 @@ public class Controlador {
         List<Producto> listaProductos= carritos.carritoEmail(auth.getName()).getProductos();
         List<Direccion> listaDirecciones = direcciones.listaDireccionesEmail(auth.getName());
         List<Tarjeta> listaTarjetas = tarjetas.listaTarjetasEmail(auth.getName());
-        for (int i = 0; i<listaProductos.size(); i++){
-            System.out.println(listaProductos.get(i).getNombre());
+        float precioTotal =0;
+        for (int i=0; i<listaProductos.size();i++){
+            precioTotal = precioTotal + listaProductos.get(i).getPrecio();
         }
+        mv.addObject("precioTotal", precioTotal);
         String correo = auth.getName();
         String[] correoSeparado = correo.split("@");
         String user = correoSeparado[0];
@@ -485,7 +526,6 @@ public class Controlador {
     public ModelAndView ejecutarPedido(@ModelAttribute Pedido pedido, Model model, Authentication auth, HttpServletRequest request) {
         ModelAndView mv = new ModelAndView();
 
-
         float precioTotal= 0.0f;
         HttpSession session = request.getSession();
         List<Producto> productosListaSession = (List<Producto>) session.getAttribute("listaProductos");
@@ -501,8 +541,14 @@ public class Controlador {
 
         Pedido pedidoFinal = new Pedido(auth.getName(), pedido.getDireccion(), pedido.getNumeroTarjeta(), fecha, precioTotal,id_productos);
 
+        String correo = auth.getName();
+        String[] correoSeparado = correo.split("@");
+        String user = correoSeparado[0];
+        mv.addObject("correo",user);
         pedidos.ejecutarPedido(pedidoFinal);
         carritos.vaciarCarritoEmail(auth.getName());
+        mv.addObject("precioTotal",precioTotal);
+        mv.addObject("productos",productosListaSession);
 
         mv.setViewName("pedidoFinalizado");
         return mv;
@@ -528,6 +574,11 @@ public class Controlador {
             Optional<Producto> productoOptional= productos.bbuscarProducto(Integer.parseInt(id_producto));
             productoList.add(productoOptional.get());
         }
+
+        String correo = auth.getName();
+        String[] correoSeparado = correo.split("@");
+        String user = correoSeparado[0];
+        mv.addObject("correo",user);
 
         mv.addObject("productos",productoList);
         return mv;

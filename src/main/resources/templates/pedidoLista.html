@@ -17,14 +17,13 @@
         <a class="navbar-brand textoBlack" th:href="@{/productosOferta}">Productos en oferta</a>
       </div>
     </div>
-    <h1>Mis pedidos</h1>
     <div style="margin-right: 2rem">
       <div th:if="${correo}" style="margin-top: 2rem">
         <div class="d-flex flex-row justify-content-end">
 
           <h2 th:text="'¡Bienvenido '+${correo}+'!'"></h2>
           <a class="navbar-brand textoBlack" th:href="@{/carrito}">
-            <button type="button" class="btn btn-icon" style="border-color: white; border-width: 3.5px; margin-left: 1rem; margin-top: -10px">
+            <button type="button" class="btn btn-icon" style="margin-left: 1rem; margin-top: -10px">
               <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="white" class="bi bi-cart-fill" viewBox="0 0 16 16">
                 <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4zm-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2zm7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2z"/>
               </svg>
@@ -44,6 +43,9 @@
     </div>
   </nav>
 </header>
+<div style="height: 10rem">
+</div>
+<h1 style="margin-left: 30%">Mis Pedidos</h1>
 <div  class="d-flex flex-row justify-content-center">
   <div>
     <th:block th:if="${pedidos}">
@@ -65,6 +67,13 @@
     </th:block>
   </div>
 </div>
+<th:block th:unless="${pedidos}">
+  <div class="d-flex flex-direction-row justify-content-center" style="width: 100%; margin-top: 10rem">
+    <h6>No se han realizado pedidos</h6>
+  </div>
+</th:block>
+<div style="height: 5rem">
+</div>
 </body>
 </html>
 <style>
@@ -76,5 +85,12 @@
   }
   .textoBlack{
     color: black;
+  }
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 100;
   }
 </style>

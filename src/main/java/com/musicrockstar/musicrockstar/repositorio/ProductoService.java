@@ -51,6 +51,17 @@ public class ProductoService{
         }
         return ofertaProductos;
     }
+
+    public List<Producto> listaProductosBusqueda(String busqueda) {
+        List<Producto> todosProductos=productos.findAll();
+        List<Producto> busquedaProductos = new ArrayList<>();
+        for (int i = 0; i<todosProductos.size();i++){
+            if (todosProductos.get(i).getDescripcion().toLowerCase().contains(busqueda) || todosProductos.get(i).getNombre().toLowerCase().contains(busqueda)){
+                busquedaProductos.add(todosProductos.get(i));
+            }
+        }
+        return busquedaProductos;
+    }
     public Optional<Producto> bbuscarProducto(int id) {
         return productos.findById(id);
     }
