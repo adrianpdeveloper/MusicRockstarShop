@@ -43,6 +43,11 @@ public class PedidoService {
         return pedidos.findById(id);
     }
 
+    public void borrarPedido(int id) {
+
+        pedidos.deleteById(id);
+    }
+
     public void ejecutarPedido(Pedido pedido){
         pedidos.save(pedido);
     }

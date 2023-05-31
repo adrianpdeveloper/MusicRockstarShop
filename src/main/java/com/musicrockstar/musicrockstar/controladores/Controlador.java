@@ -110,7 +110,7 @@ public class Controlador {
 
         try {
 
-            List<Producto> todosProductos = productos.listaProductos();
+            List<Producto> todosProductos = productos.listaProductosOferta();
             mv.addObject("productos",todosProductos);
             String correo = auth.getName();
             String[] correoSeparado = correo.split("@");
@@ -212,7 +212,6 @@ public class Controlador {
         try {
 
             List<Producto> todosProductos = productos.listaProductosTipo("otro");
-            //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
             mv.addObject("productos",todosProductos);
             String correo = auth.getName();
             String[] correoSeparado = correo.split("@");
@@ -275,11 +274,27 @@ public class Controlador {
         Producto p;
         if (producto.isPresent()) p=producto.get(); else p=null;
         //List<Producto> todosProductos = Arrays.asList(new Producto(1, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10),new Producto(2, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10), new Producto(3, "Guitarra", "Cuerda", "cuerda.jpg", 3, 130.0f, 90, 10));
+        List<Opinion> opiniones = p.getOpiniones();
+        int o = 0;
+        for (int i = 0; i< opiniones.size(); i++){
+            o = o + opiniones.get(i).getValoracion();
+        }
+        double mediaValoracion = (double) o / opiniones.size();
+        long mediaRedondeada = Math.round(mediaValoracion);
+        if (opiniones.size()!=0){
+            mv.addObject("valoracionMedia", mediaRedondeada);
+            mv.addObject("valoracionNumero", opiniones.size());
+            System.out.println("Media = "+mediaRedondeada);
+            System.out.println("Media 2= "+mediaValoracion);
+        }
         mv.addObject("producto",p);
         mv.setViewName("producto");
         mv.addObject("opinion", new Opinion());
         try{
-            mv.addObject("correo",auth.getName());
+            String correo = auth.getName();
+            String[] correoSeparado = correo.split("@");
+            String user = correoSeparado[0];
+            mv.addObject("correo",user);
         }catch (Exception e){
 
         }
@@ -349,7 +364,10 @@ public class Controlador {
                 for (int i=0; i<carrito.getProductos().size();i++){
                     precioTotal = precioTotal + carrito.getProductos().get(i).getPrecio();
                 }
+                precioTotal = (float) (Math.round(precioTotal * 100.0) / 100.0);
+                System.out.println(precioTotal);
                 mv.addObject("precioTotal", precioTotal);
+                mv.addObject("numeroProductos", carrito.getProductos().size());
             }
 
         }catch (Exception e){
@@ -388,6 +406,7 @@ public class Controlador {
             String user = correoSeparado[0];
             mv.addObject("correo",user);
             List<Pedido> pedidoEmail = pedidos.pedidoEmail(auth.getName());
+            Collections.reverse(pedidoEmail);
             if (pedidoEmail.size()>0){
                 mv.addObject("pedidos",pedidoEmail);
             }
@@ -481,6 +500,16 @@ public class Controlador {
 
         return "redirect:/tarjeta";
     }
+
+    @PostMapping("/borrarPedido/{id}")
+    public String borrarPedido(@PathVariable int id, Authentication auth) {
+
+
+        pedidos.borrarPedido(id);
+        List<Direccion> direccionEmail = direcciones.listaDireccionesEmail(auth.getName());
+
+        return "redirect:/pedidoLista";
+    }
     @PostMapping("/agregarCarrito")
     public String agregarCarrito(@RequestParam("producto") int id_Producto, Model model, Authentication auth) {
 
@@ -504,6 +533,7 @@ public class Controlador {
         for (int i=0; i<listaProductos.size();i++){
             precioTotal = precioTotal + listaProductos.get(i).getPrecio();
         }
+        precioTotal = (float) (Math.round(precioTotal * 100.0) / 100.0);
         mv.addObject("precioTotal", precioTotal);
         String correo = auth.getName();
         String[] correoSeparado = correo.split("@");
@@ -511,10 +541,12 @@ public class Controlador {
         mv.addObject("correo",user);
         mv.addObject("pedido", new Pedido());
         mv.addObject("productosLista", listaProductos);
-        mv.addObject("direcciones", listaDirecciones);
-        mv.addObject("tarjetas", listaTarjetas);
-
-
+        if (listaDirecciones.size()>0){
+            mv.addObject("direcciones", listaDirecciones);
+        }
+        if (listaTarjetas.size()>0){
+            mv.addObject("tarjetas", listaTarjetas);
+        }
         HttpSession session = request.getSession();
         session.setAttribute("listaProductos", listaProductos);
         System.out.println("Lista productos size ="+listaProductos.size());
@@ -534,6 +566,7 @@ public class Controlador {
             precioTotal = precioTotal + productosListaSession.get(i).getPrecio();
             sb.append(productosListaSession.get(i).getId()).append("/");
         }
+        precioTotal = (float) (Math.round(precioTotal * 100.0) / 100.0);
         String id_productos = sb.toString().trim();
         System.out.println(productosListaSession.size());
         Date myDate = new Date();
@@ -549,7 +582,7 @@ public class Controlador {
         carritos.vaciarCarritoEmail(auth.getName());
         mv.addObject("precioTotal",precioTotal);
         mv.addObject("productos",productosListaSession);
-
+        productos.bajarInventario(productosListaSession);
         mv.setViewName("pedidoFinalizado");
         return mv;
     }

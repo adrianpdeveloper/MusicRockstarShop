@@ -62,6 +62,17 @@ public class ProductoService{
         }
         return busquedaProductos;
     }
+
+    public void bajarInventario(List<Producto> listaProductos){
+        int inventario;
+        for (int i = 0; i<listaProductos.size();i++){
+            inventario = listaProductos.get(i).getInventario();
+            listaProductos.get(i).setInventario(inventario-1);
+            productos.save(listaProductos.get(i));
+        }
+    }
+
+
     public Optional<Producto> bbuscarProducto(int id) {
         return productos.findById(id);
     }
